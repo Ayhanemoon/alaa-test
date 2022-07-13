@@ -65,17 +65,21 @@ export default defineComponent({
             message: "You are logged in",
             position: "top-right",
           });
+          console.log(response);
           router.replace({ name: "profile" });
         })
         .catch((error) => {
-          for (const property in error.response.data.errors) {
-            $q.notify({
-              color: "negative",
-              textColor: "white",
-              icon: "outlet",
-              message: `${error.response.data.errors[property]}`,
-              position: "top-right",
-            });
+          console.log(error);
+          if (error.response !== undefined) {
+            for (const property in error.response.data.errors) {
+              $q.notify({
+                color: "negative",
+                textColor: "white",
+                icon: "outlet",
+                message: `${error.response.data.errors[property]}`,
+                position: "top-right",
+              });
+            }
           }
         });
     };

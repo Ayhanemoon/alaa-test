@@ -58,8 +58,40 @@ const actions = {
   async login({ commit }, { mobile, password }) {
     const response = await api.post("login", { mobile, password });
     const { data } = response;
-    setToken(data.access_token);
-    commit("setUser", data);
+    setToken(data.data.access_token);
+    SessionStorage.set("userData", JSON.stringify(data.data));
+    SessionStorage.set("Authenticated", true);
+
+    LocalStorage.set("userData", JSON.stringify(data.data));
+    LocalStorage.set("Authenticated", true);
+
+    let cookie = {
+      userData: data.data,
+      Authenticated: true,
+    };
+    Cookies.set("alaa", JSON.stringify(cookie), {
+      expires: "1d",
+      path: "/",
+      sameSite: "Strict",
+    });
+    commit("setUser", data.data);
+  },
+
+  async logout({ commit }) {
+    SessionStorage.remove("userData");
+    SessionStorage.remove("Authenticated");
+    LocalStorage.remove("userData");
+    LocalStorage.remove("Authenticated");
+    Cookies.remove("alaa", { path: "/" });
+    commit("setUser", {});
+  },
+
+  async get({ commit }) {
+    const user =
+      SessionStorage.getItem("userData") || LocalStorage.getItem("userData");
+    if (user) {
+      commit("setUser", JSON.parse(user));
+    }
   },
 };
 

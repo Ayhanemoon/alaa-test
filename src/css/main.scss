@@ -8,8 +8,17 @@ a {
   -webkit-font-smoothing: antialiased;
 }
 
-/*********** Login Page ***********/
+/*********** Pages ***********/
 .login {
+  background: #e0e0e0;
+  -webkit-transition: all 400ms ease;
+  -moz-transition: all 400ms ease;
+  -ms-transition: all 400ms ease;
+  -o-transition: all 400ms ease;
+  transition: all 400ms ease;
+}
+
+.profile {
   background: #e0e0e0;
   -webkit-transition: all 400ms ease;
   -moz-transition: all 400ms ease;

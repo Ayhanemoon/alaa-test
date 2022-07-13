@@ -1,5 +1,5 @@
 <template>
-  <q-form @submit.prevent="onSubmit" class="q-gutter-md">
+  <q-form @submit="onSubmit" class="q-gutter-md">
     <slot name="inputs"></slot>
     <div>
       <q-btn
@@ -18,7 +18,7 @@ export default defineComponent({
   name: "Form",
   props: {
     submitLabel: {
-      type: Function,
+      type: String,
       required: true,
     },
   },

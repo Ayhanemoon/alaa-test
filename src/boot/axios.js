@@ -16,7 +16,7 @@ const api = axios.create({
 });
 
 function setToken(token) {
-  api.defaults.headers["Authorization"] = `Token ${token}`;
+  api.defaults.headers["Authorization"] = `Bearer ${token}`;
 }
 
 function removeToken() {
