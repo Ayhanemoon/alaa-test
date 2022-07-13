@@ -7,6 +7,24 @@ import axios from "axios";
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+var csrfToken = getCookie("csrftoken");
+
 const api = axios.create({
   baseURL: "https://alaatv.com/api/v2/",
   headers: {
@@ -23,6 +41,11 @@ function removeToken() {
   delete api.defaults.headers["Authorization"];
 }
 
+function setCSRF() {
+  api.defaults.headers["X-CSRFToken"] = getCookie("csrftoken");
+  console.log(getCookie("csrftoken"));
+}
+
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
@@ -35,4 +58,4 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-export { api, setToken, removeToken };
+export { api, setToken, removeToken, setCSRF };

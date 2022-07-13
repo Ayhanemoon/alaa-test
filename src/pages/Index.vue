@@ -62,7 +62,7 @@ export default defineComponent({
             color: "positive",
             textColor: "white",
             icon: "check_circle",
-            message: "You are logged in",
+            message: "You are logged in successfully",
             position: "top-right",
           });
           console.log(response);
