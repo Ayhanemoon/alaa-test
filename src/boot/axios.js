@@ -26,7 +26,7 @@ function getCookie(name) {
 var csrfToken = getCookie("csrftoken");
 
 const api = axios.create({
-  baseURL: "https://alaatv.com/api/v2/",
+  baseURL: "/api/",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -43,7 +43,6 @@ function removeToken() {
 
 function setCSRF() {
   api.defaults.headers["X-CSRFToken"] = getCookie("csrftoken");
-  console.log(getCookie("csrftoken"));
 }
 
 export default boot(({ app }) => {

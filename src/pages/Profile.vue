@@ -94,11 +94,11 @@
                   :options="provinces"
                   :option-value="(option) => option.id"
                   :option-label="(option) => option.title"
-                  label="City"
+                  label="province"
                   :rules="[(val) => !!val || 'Field is required']"
                 />
                 <q-select
-                  v-model="profile.ciy"
+                  v-model="profile.city"
                   outlined
                   color="positive"
                   :options="
@@ -150,7 +150,7 @@ export default defineComponent({
       school: user.value.user.school,
       major: user.value.user.major,
       grade: user.value.user.grade,
-      city: user.value.user.city,
+      city: user.value.user.shahr,
       gender: user.value.user.gender,
     });
     const province = ref("");
@@ -168,8 +168,18 @@ export default defineComponent({
     };
 
     const saveProfile = () => {
+      let formData = {
+        first_name: profile.value.first_name,
+        last_name: profile.value.last_name,
+        address: profile.value.address,
+        school: profile.value.school,
+        major_id: profile.value.major.id,
+        grade_id: profile.value.grade.id,
+        gender_id: profile.value.gender.id,
+        shahr_id: profile.value.city.id,
+      };
       let data = {
-        profile: profile.value,
+        profile: formData,
         userId: user.value.user.id,
       };
       store
@@ -195,7 +205,18 @@ export default defineComponent({
     };
 
     onBeforeMount(() => {
-      store.dispatch("user/get");
+      store.dispatch("user/get").then(() => {
+        profile.value = {
+          first_name: user.value.user.first_name,
+          last_name: user.value.user.last_name,
+          address: user.value.user.address,
+          school: user.value.user.school,
+          major: user.value.user.major,
+          grade: user.value.user.grade,
+          city: user.value.user.shahr,
+          gender: user.value.user.gender,
+        };
+      });
       store.dispatch("profile/getOptions");
     });
     return {

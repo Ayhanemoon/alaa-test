@@ -72,7 +72,6 @@ const actions = {
     setToken(JSON.parse(token).access_token);
     let response = await api.put(`user/${payload.userId}`, payload.profile);
     let { data } = response;
-    console.log(data);
     return data;
   },
 };
